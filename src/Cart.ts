@@ -8,15 +8,27 @@ interface Item {
   product: Product;
 }
 
-export class Cart {
-  items = [];
+export interface CartInterface {
+  items: Array<Item>;
+  getTotal(): number;
+  add(item: Item): void;
+  remove(product: Product): void;
+  summary(): void;
+  checkout(): void;
+}
+
+export class Cart implements CartInterface {
+  items: Array<Item> = [];
 
   getTotal(): number {
-    return 0;
+    return this.items.reduce(
+      (acc, item: Item) => acc + item.quantity * item.product.price,
+      0,
+    );
   }
 
   add(item: Item): void {
-    return;
+    this.items.push(item);
   }
 
   remove(product: Product): void {
