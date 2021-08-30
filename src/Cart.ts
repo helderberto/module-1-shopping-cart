@@ -1,6 +1,6 @@
 interface Product {
   title: string;
-  price: string;
+  price: number;
 }
 
 interface Item {
