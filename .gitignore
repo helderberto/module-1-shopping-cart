@@ -1,0 +1,7 @@
+node_modules
+coverage
+dist
+.DS_Store
+
+# Avoid deps mistakes because project uses yarn.lock
+package-lock.json

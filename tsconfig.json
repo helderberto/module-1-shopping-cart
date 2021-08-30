@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "target": "esnext",
+    "module": "commonjs",
+    "lib": ["esnext"],
+    "moduleResolution": "node",
+    "declaration": true,
+    "declarationDir": "./dist/types",
+    "outDir": "./dist",
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "noEmit": false,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strict": true,
+    "sourceMap": true
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules", "src/__tests__"]
+}
