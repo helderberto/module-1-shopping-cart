@@ -67,7 +67,7 @@ describe('Cart', () => {
     it('should return an object with the total and the list of items', () => {
       cart.add({
         product,
-        quantity: 1,
+        quantity: 2,
       });
 
       cart.add({
@@ -75,27 +75,7 @@ describe('Cart', () => {
         quantity: 2,
       });
 
-      expect(cart.checkout()).toMatchInlineSnapshot(`
-Object {
-  "items": Array [
-    Object {
-      "product": Object {
-        "price": 35388,
-        "title": "Adidas running shoes - men",
-      },
-      "quantity": 1,
-    },
-    Object {
-      "product": Object {
-        "price": 40000,
-        "title": "Adidas running shoes - women",
-      },
-      "quantity": 2,
-    },
-  ],
-  "total": 115388,
-}
-`);
+      expect(cart.checkout()).toMatchSnapshot();
     });
   });
 });
