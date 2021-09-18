@@ -1,7 +1,7 @@
-import { Cart, Bag, Product } from '../Cart';
+import { Cart, Shopping, Product } from '../Cart';
 
 describe('Cart', () => {
-  let cart: Bag;
+  let cart: Shopping;
   const product: Product = {
     title: 'Adidas running shoes - men',
     price: 35388,

@@ -11,7 +11,7 @@ interface Item {
   product: Product;
 }
 
-export interface Bag {
+export interface Shopping {
   items: Array<Item>;
   getTotal(): number;
   add(item: Item): void;
@@ -20,7 +20,7 @@ export interface Bag {
   checkout(): void;
 }
 
-export class Cart implements Bag {
+export class Cart implements Shopping {
   items: Item[] = [];
 
   getTotal(): number {
