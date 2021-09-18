@@ -43,11 +43,18 @@ export class Cart implements Shopping {
     remove(this.items, { product });
   }
 
-  summary(): void {
-    return;
+  summary(): { items: Item[]; total: number } {
+    const total = this.getTotal();
+    const items = this.items;
+
+    return { items, total };
   }
 
   checkout(): { items: Item[]; total: number } {
-    return { items: this.items, total: this.getTotal() };
+    const { total, items } = this.summary();
+
+    this.items = [];
+
+    return { items, total };
   }
 }
