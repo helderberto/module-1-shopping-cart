@@ -21,7 +21,7 @@ export interface Bag {
 }
 
 export class Cart implements Bag {
-  items: Array<Item> = [];
+  items: Item[] = [];
 
   getTotal(): number {
     return this.items.reduce(
@@ -47,7 +47,7 @@ export class Cart implements Bag {
     return;
   }
 
-  checkout(): void {
-    return;
+  checkout(): { items: Item[]; total: number } {
+    return { items: this.items, total: this.getTotal() };
   }
 }
