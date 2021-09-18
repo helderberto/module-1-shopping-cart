@@ -40,7 +40,7 @@ export class Cart implements Bag {
   }
 
   remove(product: Product): void {
-    return;
+    remove(this.items, { product });
   }
 
   summary(): void {
