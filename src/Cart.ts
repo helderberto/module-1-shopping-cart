@@ -1,4 +1,7 @@
-interface Product {
+import find from 'lodash/find';
+import remove from 'lodash/remove';
+
+export interface Product {
   title: string;
   price: number;
 }
@@ -8,7 +11,7 @@ interface Item {
   product: Product;
 }
 
-export interface CartInterface {
+export interface Bag {
   items: Array<Item>;
   getTotal(): number;
   add(item: Item): void;
@@ -17,7 +20,7 @@ export interface CartInterface {
   checkout(): void;
 }
 
-export class Cart implements CartInterface {
+export class Cart implements Bag {
   items: Array<Item> = [];
 
   getTotal(): number {
@@ -28,6 +31,11 @@ export class Cart implements CartInterface {
   }
 
   add(item: Item): void {
+    const itemToMatch = { product: item.product };
+
+    if (find(this.items, itemToMatch)) {
+      remove(this.items, itemToMatch);
+    }
     this.items.push(item);
   }
 

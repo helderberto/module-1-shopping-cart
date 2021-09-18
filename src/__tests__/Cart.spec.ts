@@ -1,7 +1,11 @@
-import { Cart, CartInterface } from '../Cart';
+import { Cart, Bag, Product } from '../Cart';
 
 describe('Cart', () => {
-  let cart: CartInterface;
+  let cart: Bag;
+  const product: Product = {
+    title: 'Adidas running shoes',
+    price: 35388,
+  };
 
   beforeEach(() => {
     cart = new Cart();
@@ -13,15 +17,26 @@ describe('Cart', () => {
 
   it('should multiply quantity with price and receive the total amount', () => {
     const item = {
-      product: {
-        title: 'Adidas running shoes',
-        price: 35388,
-      },
+      product,
       quantity: 2,
     };
 
     cart.add(item);
 
     expect(cart.getTotal()).toBe(70776);
+  });
+
+  it('should ensure no more than one product exists at a time', () => {
+    cart.add({
+      product,
+      quantity: 2,
+    });
+
+    cart.add({
+      product,
+      quantity: 1,
+    });
+
+    expect(cart.getTotal()).toBe(35388);
   });
 });
