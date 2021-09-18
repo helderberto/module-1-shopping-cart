@@ -12,12 +12,17 @@ interface Item {
 }
 
 export interface Shopping {
-  items: Array<Item>;
+  items: Item[];
   getTotal(): number;
   add(item: Item): void;
   remove(product: Product): void;
   summary(): void;
   checkout(): void;
+}
+
+interface Summary {
+  items: Item[];
+  total: number;
 }
 
 export class Cart implements Shopping {
@@ -43,14 +48,14 @@ export class Cart implements Shopping {
     remove(this.items, { product });
   }
 
-  summary(): { items: Item[]; total: number } {
+  summary(): Summary {
     const total = this.getTotal();
     const items = this.items;
 
     return { items, total };
   }
 
-  checkout(): { items: Item[]; total: number } {
+  checkout(): Summary {
     const { total, items } = this.summary();
 
     this.items = [];
