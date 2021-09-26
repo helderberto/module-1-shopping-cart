@@ -1,5 +1,11 @@
 import find from 'lodash/find';
 import remove from 'lodash/remove';
+import Dinero, { Dinero as DineroInterface } from 'dinero.js';
+
+const Money = Dinero;
+
+Money.defaultCurrency = 'BRL';
+Money.defaultPrecision = 2;
 
 export interface Product {
   title: string;
@@ -13,7 +19,7 @@ interface Item {
 
 export interface Shopping {
   items: Item[];
-  getTotal(): number;
+  getTotal(): DineroInterface;
   add(item: Item): void;
   remove(product: Product): void;
   summary(): void;
@@ -28,10 +34,11 @@ interface Summary {
 export class Cart implements Shopping {
   items: Item[] = [];
 
-  getTotal(): number {
+  getTotal(): DineroInterface {
     return this.items.reduce(
-      (acc, item: Item) => acc + item.quantity * item.product.price,
-      0,
+      (acc, item: Item) =>
+        acc.add(Money({ amount: item.quantity * item.product.price })),
+      Money({ amount: 0 }),
     );
   }
 
@@ -49,7 +56,7 @@ export class Cart implements Shopping {
   }
 
   summary(): Summary {
-    const total = this.getTotal();
+    const total = this.getTotal().getAmount();
     const items = this.items;
 
     return { items, total };
