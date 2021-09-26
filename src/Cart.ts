@@ -37,6 +37,16 @@ interface Summary {
   total: number;
 }
 
+const calculatePercentageDiscount = (
+  amount: DineroInterface,
+  item: Item,
+): DineroInterface => {
+  if (item.condition?.percentage && item.quantity > item.condition.minimum) {
+    return amount.percentage(item.condition.percentage);
+  }
+  return Money({ amount: 0 });
+};
+
 export class Cart implements Shopping {
   items: Item[] = [];
 
@@ -45,12 +55,8 @@ export class Cart implements Shopping {
       const amount = Money({ amount: item.quantity * item.product.price });
       let discount = Money({ amount: 0 });
 
-      if (
-        item.condition &&
-        item.condition.percentage &&
-        item.quantity > item.condition.minimum
-      ) {
-        discount = amount.percentage(item.condition.percentage);
+      if (item.condition?.percentage && item.condition?.minimum) {
+        discount = calculatePercentageDiscount(amount, item);
       }
 
       return acc.add(amount).subtract(discount);
