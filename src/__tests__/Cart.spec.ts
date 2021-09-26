@@ -104,4 +104,21 @@ describe('Cart', () => {
       expect(cart.getTotal().getAmount()).toBe(0);
     });
   });
+
+  describe('special conditions', () => {
+    it('should apply a discount when above minimum quantity', () => {
+      const condition = {
+        percentage: 30,
+        minimum: 3,
+      };
+
+      cart.add({
+        product,
+        quantity: 4,
+        condition,
+      });
+
+      expect(cart.getTotal().getAmount()).toBe(99086);
+    });
+  });
 });

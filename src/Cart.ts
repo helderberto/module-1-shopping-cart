@@ -12,9 +12,15 @@ export interface Product {
   price: number;
 }
 
+interface DiscountCondition {
+  percentage: number;
+  minimum: number;
+}
+
 interface Item {
   quantity: number;
   product: Product;
+  condition?: DiscountCondition;
 }
 
 export interface Shopping {
@@ -35,11 +41,20 @@ export class Cart implements Shopping {
   items: Item[] = [];
 
   getTotal(): DineroInterface {
-    return this.items.reduce(
-      (acc, item: Item) =>
-        acc.add(Money({ amount: item.quantity * item.product.price })),
-      Money({ amount: 0 }),
-    );
+    return this.items.reduce((acc, item: Item) => {
+      const amount = Money({ amount: item.quantity * item.product.price });
+      let discount = Money({ amount: 0 });
+
+      if (
+        item.condition &&
+        item.condition.percentage &&
+        item.quantity > item.condition.minimum
+      ) {
+        discount = amount.percentage(item.condition.percentage);
+      }
+
+      return acc.add(amount).subtract(discount);
+    }, Money({ amount: 0 }));
   }
 
   add(item: Item): void {
