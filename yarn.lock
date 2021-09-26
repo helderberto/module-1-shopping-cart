@@ -1267,6 +1267,11 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/dinero.js@^1.8.1":
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/@types/dinero.js/-/dinero.js-1.8.1.tgz#9877fbaef88d1685fb901cd66b19ba61d0457947"
+  integrity sha512-3hEsGSPlKWiaR/DOw5zQXum7bkplnfUK9V1UYQYDzMsYGbWFS1OsqIMLIRutVIX4jGSAmLaBp4CkrtFYf/odUQ==
+
 "@types/graceful-fs@^4.1.2":
   version "4.1.5"
   resolved "https://registry.yarnpkg.com/@types/graceful-fs/-/graceful-fs-4.1.5.tgz#21ffba0d98da4350db64891f92a9e5db3cdb4e15"
@@ -1993,6 +1998,11 @@ diff-sequences@^27.0.6:
   version "27.0.6"
   resolved "https://registry.yarnpkg.com/diff-sequences/-/diff-sequences-27.0.6.tgz#3305cb2e55a033924054695cc66019fd7f8e5723"
   integrity sha512-ag6wfpBFyNXZ0p8pcuIDS//D8H062ZQJ3fzYxjpmeKjnz8W4pekL3AI8VohmyZmsWW2PWaHgjsmqR6L13101VQ==
+
+dinero.js@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/dinero.js/-/dinero.js-1.9.0.tgz#15cd6b8290538077cf80c35f4a26884d8806050f"
+  integrity sha512-gbDFhCCe/ba9pU2P232FS54LFPCLeGTb8vcrgsjmXHknu/VDHIgFecA8mxLYQsqVKkHoHSCUq95ojYOakzuweA==
 
 dir-glob@^3.0.1:
   version "3.0.1"
