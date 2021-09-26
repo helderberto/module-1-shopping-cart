@@ -45,11 +45,11 @@ const calculatePercentageDiscount = (
   if (
     item.condition?.percentage &&
     item.condition?.minimum &&
-    item.quantity > item.condition.minimum
+    item.quantity >= item.condition.minimum
   ) {
     return amount.percentage(item.condition.percentage);
   }
-  return amount;
+  return Money({ amount: 0 });
 };
 
 const calculateQuantityDiscount = (
@@ -60,7 +60,7 @@ const calculateQuantityDiscount = (
   if (item.condition?.quantity && item.quantity > item.condition.quantity) {
     return amount.percentage(isEven ? 50 : 40);
   }
-  return amount;
+  return Money({ amount: 0 });
 };
 
 export class Cart implements Shopping {
@@ -71,7 +71,7 @@ export class Cart implements Shopping {
       const amount = Money({ amount: item.quantity * item.product.price });
       let discount = Money({ amount: 0 });
 
-      if (item.condition?.percentage) {
+      if (item.condition?.percentage && item.condition?.minimum) {
         discount = calculatePercentageDiscount(amount, item);
       } else if (item.condition?.quantity) {
         discount = calculateQuantityDiscount(amount, item);
