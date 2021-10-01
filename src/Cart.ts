@@ -1,47 +1,12 @@
 import find from 'lodash/find';
 import remove from 'lodash/remove';
-import Dinero, { Dinero as DineroInterface } from 'dinero.js';
+import Dinero from 'dinero.js';
+import type { Item, Product, Shopping, Summary, Money } from './types';
 
-const Money = Dinero;
+Dinero.defaultCurrency = 'BRL';
+Dinero.defaultPrecision = 2;
 
-Money.defaultCurrency = 'BRL';
-Money.defaultPrecision = 2;
-
-export interface Product {
-  title: string;
-  price: number;
-}
-
-interface DiscountCondition {
-  percentage?: number;
-  minimum?: number;
-  quantity?: number;
-}
-
-interface Item {
-  quantity: number;
-  product: Product;
-  condition?: DiscountCondition;
-}
-
-export interface Shopping {
-  items: Item[];
-  getTotal(): DineroInterface;
-  add(item: Item): void;
-  remove(product: Product): void;
-  summary(): void;
-  checkout(): void;
-}
-
-interface Summary {
-  items: Item[];
-  total: number;
-}
-
-const calculatePercentageDiscount = (
-  amount: DineroInterface,
-  item: Item,
-): DineroInterface => {
+const calculatePercentageDiscount = (amount: Money, item: Item): Money => {
   if (
     item.condition?.percentage &&
     item.condition?.minimum &&
@@ -49,27 +14,24 @@ const calculatePercentageDiscount = (
   ) {
     return amount.percentage(item.condition.percentage);
   }
-  return Money({ amount: 0 });
+  return Dinero({ amount: 0 });
 };
 
-const calculateQuantityDiscount = (
-  amount: DineroInterface,
-  item: Item,
-): DineroInterface => {
+const calculateQuantityDiscount = (amount: Money, item: Item): Money => {
   const isEven = item.quantity % 2 === 0;
   if (item.condition?.quantity && item.quantity > item.condition.quantity) {
     return amount.percentage(isEven ? 50 : 40);
   }
-  return Money({ amount: 0 });
+  return Dinero({ amount: 0 });
 };
 
 export class Cart implements Shopping {
   items: Item[] = [];
 
-  getTotal(): DineroInterface {
+  getTotal(): Money {
     return this.items.reduce((acc, item: Item) => {
-      const amount = Money({ amount: item.quantity * item.product.price });
-      let discount = Money({ amount: 0 });
+      const amount = Dinero({ amount: item.quantity * item.product.price });
+      let discount = Dinero({ amount: 0 });
 
       if (item.condition?.percentage && item.condition?.minimum) {
         discount = calculatePercentageDiscount(amount, item);
@@ -78,7 +40,7 @@ export class Cart implements Shopping {
       }
 
       return acc.add(amount).subtract(discount);
-    }, Money({ amount: 0 }));
+    }, Dinero({ amount: 0 }));
   }
 
   add(item: Item): void {

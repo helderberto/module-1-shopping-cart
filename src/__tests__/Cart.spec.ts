@@ -1,4 +1,5 @@
-import { Cart, Shopping, Product } from '../Cart';
+import { Cart } from '../Cart';
+import type { Shopping, Product } from '../types';
 
 describe('Cart', () => {
   let cart: Shopping;
